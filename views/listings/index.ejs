@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show All Listt Data</title>
+</head>
+<body>
+    <h1>Show All Listing</h1>
+    <form method="GET" action="Listings/addNew">
+        <button>Add New Home Stay</button>
+    </form>
+    <ul>
+       <% for(HomeStayListing of HomeStayListings){ %>
+            <li>
+                <a href="/Listings/<%=HomeStayListing._id  %>">
+                    <%= HomeStayListing.title %>
+                </a>
+            </li>
+       <% }%>
+    </ul>
+</body>
+</html>

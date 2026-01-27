@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Stay Add</title>
+</head>
+<body>
+    <h2>To add Home Stay Enter Details:</h2>
+    <form method="POST" action="/Listings?_method=PUT">
+        <input type="text" name="listing[title]" placeholder="Enter Your Name Of Home Stay" id="title"/><br/><br/>
+        <textarea name="listing[description]" id="description" placeholder="Describe your Home Stay"></textarea><br/><br/>
+        <input type="text" name="listing[price]" placeholder="Enter Price for Home Stay" id="price"/><br/><br/>
+        <input type="text" name="listing[location]" placeholder="Enter home stay location" id="location"/><br/><br/>
+        <input type="text" name="listing[country]" placeholder="Enter your counter" id="country"/><br/><br/>
+        <input type="text" name="listing[image]" placeholder="Enter path of your image Url" id="image"/><br/><br/>
+        <button>Submit</button>
+    </form>
+</body>
+</html>

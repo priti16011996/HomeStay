@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Specific</title>
+  </head>
+  <body>
+    <h2><%= specificHomeStayData.title %></h2>
+    <ul>
+      <li><%= specificHomeStayData.title %></li>
+      <li><%= specificHomeStayData.description %></li>
+      <li>₹<%= specificHomeStayData.price.toLocaleString("en-IN") %></li>
+      <li><%= specificHomeStayData.location %></li>
+      <li><%= specificHomeStayData.country %></li>
+    </ul>
+    <form method="POST" action="/Listings/<%= specificHomeStayData._id %>/editHomeStayDesc">
+        <button>Edit Details</button>
+    </form><br/><br/>
+    <form method="POST" action="/Listings/<%= specificHomeStayData._id %>?_method=DELETE">
+        <button>Delete</button>
+    </form>
+  </body>
+</html>
