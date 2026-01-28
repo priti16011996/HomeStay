@@ -1,20 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Stay Add</title>
-</head>
+<% layout("/layouts/boilerplate.ejs")  %>
 <body>
-    <h2>To add Home Stay Enter Details:</h2>
-    <form method="POST" action="/Listings?_method=PUT">
-        <input type="text" name="listing[title]" placeholder="Enter Your Name Of Home Stay" id="title"/><br/><br/>
-        <textarea name="listing[description]" id="description" placeholder="Describe your Home Stay"></textarea><br/><br/>
-        <input type="text" name="listing[price]" placeholder="Enter Price for Home Stay" id="price"/><br/><br/>
-        <input type="text" name="listing[location]" placeholder="Enter home stay location" id="location"/><br/><br/>
-        <input type="text" name="listing[country]" placeholder="Enter your counter" id="country"/><br/><br/>
-        <input type="text" name="listing[image]" placeholder="Enter path of your image Url" id="image"/><br/><br/>
-        <button>Submit</button>
-    </form>
+    <div class="row">
+        <div class="col-8 offset-2">
+        <br/><br/>
+        <h2>Enter Your HomeStay Details to add:</h2><br/>
+        <form method="POST" action="/Listings?_method=PUT">
+            <div  class="mb-3">
+                <label for="title" class="form-label">Name:</label>
+                <input type="text" name="listing[title]" placeholder="Enter Your Name Of Home Stay" id="title" class="form-control"/>
+            </div>
+            <div  class="mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <textarea name="listing[description]" id="description" placeholder="Describe your Home Stay" class="form-control"></textarea>
+            </div>
+            <div  class="mb-3">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" name="listing[location]" placeholder="Enter home stay location" id="location" class="form-control"/>
+            </div>
+            <div class="row">
+                <div  class="col-md-4 mb-3">
+                    <label for="price" class="form-label">Price:</label>
+                    <input type="text" name="listing[price]" placeholder="Enter Price for Home Stay" id="price" class="form-control"/>
+                </div>
+                <div  class="col-md-8 mb-3">
+                    <label for="country" class="form-label">Country:</label>
+                    <input type="text" name="listing[country]" placeholder="Enter your counter" id="country" class="form-control"/>
+                </div>
+            </div>
+            <div  class="mb-3">
+                <label for="image" class="form-label">Image URL Path:</label>
+                <input type="text" name="listing[image]" placeholder="Enter path of your image Url" id="image" class="form-control"/>
+            </div>
+            
+            <button class="btn btn-dark add-btn">Add</button><br/><br/><br/>
+        </form>
+        </div>
+    </div>
 </body>
-</html>
