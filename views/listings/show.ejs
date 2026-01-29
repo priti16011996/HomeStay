@@ -1,17 +1,34 @@
 <% layout("/layouts/boilerplate.ejs")  %>
   <body>
-    <h2><%= specificHomeStayData.title %></h2>
-    <ul>
-      <li><%= specificHomeStayData.title %></li>
-      <li><%= specificHomeStayData.description %></li>
-      <li>₹<%= specificHomeStayData.price.toLocaleString("en-IN") %></li>
-      <li><%= specificHomeStayData.location %></li>
-      <li><%= specificHomeStayData.country %></li>
-    </ul>
-    <form method="POST" action="/Listings/<%= specificHomeStayData._id %>/editHomeStayDesc">
-        <button>Edit Details</button>
-    </form><br/><br/>
-    <form method="POST" action="/Listings/<%= specificHomeStayData._id %>?_method=DELETE">
-        <button>Delete</button>
-    </form>
+    <div class="row mt-2">
+      <div class="col-8 offset-2">
+          <h2><i><b>HomeStay </b></i> (<%= specificHomeStayData.title %>) Details Here</h2><br>
+      </div>
+      <div class="col-6 offset-2 fs-6">
+        <div class="card" >
+          <img src="<%= specificHomeStayData.image.url %>" class="card-img-top show-img" alt="ListingItem Image">
+          <div class="card-body">
+            <p class="card-text">
+              <h3><b><%= specificHomeStayData.title %></b></h3>
+              <%= specificHomeStayData.description %><br/>
+              ₹<%= specificHomeStayData.price.toLocaleString("en-IN") %><br/>
+              <%= specificHomeStayData.location %><br/>
+              <%= specificHomeStayData.country %>
+            </p>
+            <!-- ✅ Buttons aligned properly -->
+            <div class="d-flex gap-2 mt-3">
+              <form method="POST" action="/Listings/<%= specificHomeStayData._id %>/editHomeStayDesc">
+                <button type="submit" class="btn btn-primary">Edit</button>
+              </form>
+
+              <form method="POST" action="/Listings/<%= specificHomeStayData._id %>?_method=DELETE">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </body>
