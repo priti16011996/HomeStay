@@ -4,42 +4,53 @@
         <div class="row">
             <div class="col-8 offset-2 mt-3">
                 <h2>To Edit Home Stay Enter Details:</h2>
-                <form method="POST" action="/Listings/<%= HomeStayData._id %>?_method=PUT">
+                <form method="POST" action="/Listings/<%= HomeStayData._id %>?_method=PUT" novalidate class="needs-validation">
                     <div class="mb-3">
                         <label for="title" class="form-label">Name:</label>
                         <input type="text" name="listing[title]" value="<%= HomeStayData.title %>" id="title"
-                            class="form-control" />
+                            class="form-control" required/>
+                            <div class="valid-feedback">Title Looks Good!</div>
+                            <div class="invalid-feedback">Please Enter Valid Title</div>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Decription:</label>
-                        <textarea name="listing[description]" id="description" class="form-control">
+                        <textarea name="listing[description]" id="description" class="form-control" required>
                             <%= HomeStayData.description %></textarea>
+                            <div class="valid-feedback">Description Looks Good!</div>
+                            <div class="invalid-feedback">Please Enter Valid Description</div>
                     </div>
                     <div class="mb-3">
                         <label for="location" class="form-label">Location:</label>
                         <input type="text" name="listing[location]" value="<%= HomeStayData.location %>" id="location"
-                            class="form-control" />
+                            class="form-control" required/>
+                            <div class="valid-feedback">Correct Location</div>
+                            <div class="invalid-feedback">Please Enter Valid Location</div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="price" class="form-label">Price:</label>
                             <input type="text" name="listing[price]" value="<%= HomeStayData.price %>" id="price"
-                                class="form-control" />
+                                class="form-control" required/>
+                                <div class="valid-feedback">Price Looks Good!</div>
+                                <div class="invalid-feedback">Please Enter Valid Price</div>
                         </div>
                         <div class="col-md-8 mb-3">
                             <label for="country" class="form-label">Country:</label>
                             <input type="text" name="listing[country]" value="<%= HomeStayData.country %>" id="country"
-                                class="form-control" />
+                                class="form-control" required/>
+                                <div class="valid-feedback">Valid Country Name</div>
+                                <div class="invalid-feedback">Please Enter Valid Country Name</div>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="image" class="form-label">Image URL:</label>
-                        <input type="text" name="listing[image]" value="<%= HomeStayData.image.url %>" id="image"
-                            class="form-control" />
+                        <input type="text" name="listing[image][url]"  value="<%= HomeStayData.image.url %>" id="image"
+                            class="form-control" required/>
                     </div>
 
                     <button class="btn btn-dark edit-btn mt-3">Edit</button>
                 </form>
             </div>
         </div>
+         <script src="/js/script.js"></script>
     </body>

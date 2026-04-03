@@ -2,16 +2,15 @@
   <body>
     <div class="row mt-2">
       <div class="col-8 offset-2">
-          <h2><i><b>HomeStay </b></i> (<%= specificHomeStayData.title %>) Details Here</h2><br>
+          <h2><i><%= specificHomeStayData.title %></h2><br>
       </div>
       <div class="col-6 offset-2 fs-6">
         <div class="card" >
           <img src="<%= specificHomeStayData.image.url %>" class="card-img-top show-img" alt="ListingItem Image">
           <div class="card-body">
             <p class="card-text">
-              <h3><b><%= specificHomeStayData.title %></b></h3>
               <%= specificHomeStayData.description %><br/>
-              ₹<%= specificHomeStayData.price.toLocaleString("en-IN") %><br/>
+              <span style="color:green;">₹<%= specificHomeStayData.price.toLocaleString("en-IN") %> </span><br/>
               <%= specificHomeStayData.location %><br/>
               <%= specificHomeStayData.country %>
             </p>
@@ -25,7 +24,17 @@
                 <button type="submit" class="btn btn-danger">Delete</button>
               </form>
             </div>
-
+            <div>
+              <hr>
+              <h3>Write your valuable feedback</h3>
+              <form method="POST" action="/listings/<%= specificHomeStayData._id %>/reviews">
+                <label for="rating">Rating</label>
+                <input type="range" id="rating" name="review[rating]" min="1" max="5"><br><br>
+                <label for="comment">Comment</label><br>  
+                <textarea id="comment" name="review[comment]" rows="5" cols="50"></textarea><br><br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
