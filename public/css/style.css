@@ -57,7 +57,7 @@ body{
 
 /* Card Style */
 
-.card{
+.listing-card{
     border: none !important;
     margin: 2rem;
 }
