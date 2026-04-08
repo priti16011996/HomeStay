@@ -12,6 +12,8 @@ const ExpressError = require("./utils/ExpressError.js");
 const Review = require("./models/review.js")
 const { listingSchema, reviewSchema } = require("./schema.js");
 const Joi = require('joi'); 
+const listingsRoutes = require("./routes/listings.js"); 
+const reviewRoutes = require("./routes/reviews.js")
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -83,92 +85,9 @@ const validateReview = (req,res,next)=>{
 //     res.send("Listing Route")
 // });
 
-app.get("/Listings",wrapAsync(async(req,res)=>{
-    let HomeStayListings = await Listing.find();
-   // console.log(HomeStayListting);
-   // res.send(HomeStayListting);
-   res.render("listings/index.ejs",{HomeStayListings});
-}));
+app.use("/Listings", listingsRoutes);
 
-app.get("/Listings/addNew",(req,res)=>{
-    res.render("listings/AddHomeStay.ejs");
-})
-
-app.get("/Listings/:id",wrapAsync(async(req,res)=>{
-    let {id} = req.params;
-    let specificHomeStayData = await Listing.findById(id,).populate("reviews");
-   // console.log(specificHomeStayData);
-   res.render("listings/show.ejs",{specificHomeStayData});
-}));
-// Without try catch block phase-1
-// app.put("/Listings", async(req,res)=>{
-//     let listingData = new Listing(req.body.listing);
-//     await listingData.save();
-//     res.redirect("/Listings");
-// });
-
-// With try catch block phase-2
-// app.put("/Listings", async(req,res,next)=>{
-//     try{
-//         let listingData = new Listing(req.body.listing);
-//         await listingData.save();
-//         res.redirect("/Listings");
-//     }catch(err) {
-//         next(err);
-//     }
-    
-// });
-// With wrapAsync phase-3
-app.put("/Listings", wrapAsync(async(req,res)=>{
-    if(!req.body.listing){
-        throw new ExpressError(400,"Invalid Listing Data");
-    }
-    let listingData = new Listing(req.body.listing);
-    await listingData.save();
-    res.redirect("/Listings");
-}));
-
-app.post("/Listings/:id/editHomeStayDesc", wrapAsync(async(req, res) => {
-    let { id } = req.params;
-    let HomeStayData = await Listing.findById(id);
-    res.render("listings/EditHomeStayInfo.ejs", { HomeStayData }); 
-}));
-
-
-app.put("/Listings/:id", wrapAsync(async(req,res)=>{
-    let {id} = req.params;
-    if(!req.body.listing){
-        throw new ExpressError(400,"Invalid Listing Data");
-    }
-    let HomeStayData = await Listing.findByIdAndUpdate(id,req.body.listing);
-    //console.log(HomeStayData);
-    res.redirect(`/Listings/${id}`);
-}));
-
-app.delete("/Listings/:id", wrapAsync(async(req,res)=>{
-    let {id} = req.params;
-    let HomeStayData = await Listing.findByIdAndDelete(id);
-    //console.log(HomeStayData);
-    res.redirect("/Listings");
-}));
-
-app.post("/Listings/:id/reviews",validateReview, wrapAsync(async(req,res)=>{
-    let {id} = req.params;
-    let listing = await Listing.findById(req.params.id);
-    let NewReview = await new Review(req.body.review);
-    listing.reviews.push(NewReview);
-    await NewReview.save();
-    await listing.save();
-    res.redirect(`/Listings/${id}`);
-
-}));
-
-app.delete("/Listings/:id/reviews/:reviewId", wrapAsync(async(req,res)=>{
-    let {id, reviewId} = req.params;
-    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/Listings/${id}`);
-}));
+app.use("/Listings/:id/reviews", reviewRoutes);
 
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
