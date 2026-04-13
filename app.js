@@ -13,8 +13,22 @@ const Review = require("./models/review.js")
 const { listingSchema, reviewSchema } = require("./schema.js");
 const Joi = require('joi'); 
 const listingsRoutes = require("./routes/listings.js"); 
-const reviewRoutes = require("./routes/reviews.js")
+const reviewRoutes = require("./routes/reviews.js");
+const session = require("express-session");
+const flash = require("connect-flash");
+const sessionOptions = {
+    secret:"mySecretConsistency",
+    resave:false,
+    saveUninitialized:true,
+    cookie:{
+        expires:Date.now()+15*24*60*60*60*1000,
+        maxAge:15*24*60*60*60*1000,
+        httpOnly:true
+    }
+};
 
+app.use(session(sessionOptions));
+app.use(flash());
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(methodOverride("_method"));
@@ -38,11 +52,15 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
-
 //Home Route
 app.get("/",(req,res)=>{
     res.send("Hi!, Welcome to Home Stay")
 });
+
+app.use((req,res,next)=>{
+    res.locals.successMsg = req.flash("success");
+    next();
+})
 
 //Validation Middleware for Listing Data using JOI
 const validateListing = (req,res,next)=>{

@@ -30,6 +30,7 @@ router.put("/", wrapAsync(async(req,res)=>{
     }
     let listingData = new Listing(req.body.listing);
     await listingData.save();
+    req.flash("success","New Home Stay has been added successfully");
     res.redirect("/Listings");
 }));
 
