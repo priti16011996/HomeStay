@@ -19,8 +19,14 @@ router.get("/addNew",(req,res)=>{
 router.get("/:id",wrapAsync(async(req,res)=>{
     let {id} = req.params;
     let specificHomeStayData = await Listing.findById(id,).populate("reviews");
-   // console.log(specificHomeStayData);
-   res.render("listings/show.ejs",{specificHomeStayData});
+    if(!specificHomeStayData){
+       req.flash("error","Home Stay you are looking for does not exist anymore"); 
+       res.redirect("/Listings");
+    }
+    else
+    {
+        res.render("listings/show.ejs",{specificHomeStayData});
+    }
 }));
 
 // With wrapAsync phase-3
@@ -36,7 +42,7 @@ router.put("/", wrapAsync(async(req,res)=>{
 
 router.post("/:id/editHomeStayDesc", wrapAsync(async(req, res) => {
     let { id } = req.params;
-    let HomeStayData = await Listing.findById(id);
+    let HomeStayData = await Listing.findById(id);  
     res.render("listings/EditHomeStayInfo.ejs", { HomeStayData }); 
 }));
 
@@ -47,6 +53,7 @@ router.put("/:id", wrapAsync(async(req,res)=>{
         throw new ExpressError(400,"Invalid Listing Data");
     }
     let HomeStayData = await Listing.findByIdAndUpdate(id,req.body.listing);
+    req.flash("success","Home Stay details updated successfully");
     //console.log(HomeStayData);
     res.redirect(`/Listings/${id}`);
 }));
@@ -54,6 +61,7 @@ router.put("/:id", wrapAsync(async(req,res)=>{
 router.delete("/:id", wrapAsync(async(req,res)=>{
     let {id} = req.params;
     let HomeStayData = await Listing.findByIdAndDelete(id);
+    req.flash("success","Home Stay has been deleted successfully");
     //console.log(HomeStayData);
     res.redirect("/Listings");
 }));
