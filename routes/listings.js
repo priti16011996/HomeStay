@@ -4,7 +4,7 @@ const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("../schema.js");
-
+const {isLoggedIn} = require("../middleware.js");
 
 
 router.get("/",wrapAsync(async(req,res)=>{
@@ -12,7 +12,8 @@ router.get("/",wrapAsync(async(req,res)=>{
    res.render("listings/index.ejs",{HomeStayListings});
 }));
 
-router.get("/addNew",(req,res)=>{
+router.get("/addNew",isLoggedIn,(req,res)=>{
+    
     res.render("listings/AddHomeStay.ejs");
 })
 
@@ -40,14 +41,14 @@ router.put("/", wrapAsync(async(req,res)=>{
     res.redirect("/Listings");
 }));
 
-router.post("/:id/editHomeStayDesc", wrapAsync(async(req, res) => {
+router.post("/:id/editHomeStayDesc",isLoggedIn, wrapAsync(async(req, res) => {
     let { id } = req.params;
     let HomeStayData = await Listing.findById(id);  
     res.render("listings/EditHomeStayInfo.ejs", { HomeStayData }); 
 }));
 
 
-router.put("/:id", wrapAsync(async(req,res)=>{
+router.put("/:id",isLoggedIn, wrapAsync(async(req,res)=>{
     let {id} = req.params;
     if(!req.body.listing){
         throw new ExpressError(400,"Invalid Listing Data");
@@ -58,7 +59,7 @@ router.put("/:id", wrapAsync(async(req,res)=>{
     res.redirect(`/Listings/${id}`);
 }));
 
-router.delete("/:id", wrapAsync(async(req,res)=>{
+router.delete("/:id",isLoggedIn, wrapAsync(async(req,res)=>{
     let {id} = req.params;
     let HomeStayData = await Listing.findByIdAndDelete(id);
     req.flash("success","Home Stay has been deleted successfully");

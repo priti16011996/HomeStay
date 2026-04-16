@@ -14,7 +14,14 @@ const { listingSchema, reviewSchema } = require("./schema.js");
 const Joi = require('joi'); 
 const listingsRoutes = require("./routes/listings.js"); 
 const reviewRoutes = require("./routes/reviews.js");
+const userRoutes = require("./routes/user.js");
+
+
 const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
+
 const flash = require("connect-flash");
 const sessionOptions = {
     secret:"mySecretConsistency",
@@ -29,6 +36,17 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 app.use(flash());
+//Passport Configuration
+app.use(passport.initialize());
+//To use persistent login sessions, Passport needs to be able to serialize users into and deserialize users out of the session.
+app.use(passport.session());
+//The LocalStrategy is a Passport strategy for authenticating with a username and password. It is commonly used for traditional login systems.
+passport.use(new LocalStrategy(User.authenticate()));
+
+//The serializeUser and deserializeUser methods are used by Passport to manage user sessions. They determine how user information is stored in the session and how it is retrieved on subsequent requests. 
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());   
+
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(methodOverride("_method"));
@@ -42,7 +60,7 @@ app.listen(PORT,()=>{
 
 //Call to connect to db 
 main().then(()=>{
-    console.log("Db Cpnnection Successful");
+    console.log("Db Connection Successful");
 }).catch((err) => {
     console.log(err);
 });
@@ -60,8 +78,18 @@ app.get("/",(req,res)=>{
 app.use((req,res,next)=>{
     res.locals.successMsg = req.flash("success");
     res.locals.errorMsg = req.flash("error");
+    res.locals.currentUser = req.user;
     next();
-})
+});
+
+// app.get("/fakeUserRegister", async(req,res)=>{
+//     const fakeUser = new User({
+//         email:"Priti@gmail.com",
+//         username:"Priti_Coder"
+//     })
+//     const registerUser = await User.register(fakeUser,"PaddiKoNindAARhiHai");
+//     res.send(registerUser); 
+// })
 
 //Validation Middleware for Listing Data using JOI
 const validateListing = (req,res,next)=>{
@@ -107,6 +135,8 @@ const validateReview = (req,res,next)=>{
 app.use("/Listings", listingsRoutes);
 
 app.use("/Listings/:id/reviews", reviewRoutes);
+
+app.use("/User", userRoutes);
 
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
