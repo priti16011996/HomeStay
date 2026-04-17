@@ -3,6 +3,7 @@ const wrapAsync = require('../utils/wrapAsync');
 const router = express.Router();
 const User = require("../models/user.js");
 const passport = require("passport");
+const { saveRedirectUrl } = require('../middleware.js');
 // signup route
 router.get("/signUp",(req,res)=>{
  res.render("users/signup.ejs");
@@ -37,14 +38,15 @@ router.get("/login",(req,res)=>{
 });
 
 // login logic using passport's authenticate method, which checks the provided credentials against the database. If authentication is successful, it flashes a success message and redirects to the listings page; if it fails, it flashes an error message and redirects back to the login page.
-router.post("/login",
+router.post("/login",saveRedirectUrl,
     passport.authenticate("local",{
         failureRedirect:"/User/login",
         failureFlash:true,
     }),
     async(req,res)=>{
         req.flash("success",`Welcome Back to Home Stay ${req.user.username}`);
-        res.redirect("/Listings");
+        let redirectUrl = res.locals.redirectUrl || "/Listings";
+        res.redirect(redirectUrl);
     }
 );
 

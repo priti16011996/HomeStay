@@ -91,17 +91,7 @@ app.use((req,res,next)=>{
 //     res.send(registerUser); 
 // })
 
-//Validation Middleware for Listing Data using JOI
-const validateListing = (req,res,next)=>{
-    const {error} = listingSchema.validate(req.body);   
-    if(error){
-        const msg = error.details.map(el=>el.message).join(",");
-        throw new ExpressError(400, msg);
-    }   
-    else{
-        next();
-    }
-}
+
 
 //Validation Middleware for Review Data using JOI
 const validateReview = (req,res,next)=>{

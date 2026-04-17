@@ -9,11 +9,13 @@
           <img src="<%= specificHomeStayData.image.url %>" class="card-img-top show-img" alt="ListingItem Image">
           <div class="card-body">
             <p class="card-text">
+              <b>Property is listed By@</b><i><%= specificHomeStayData.owner[0].username %></i><br/>
               <%= specificHomeStayData.description %><br/>
               <span style="color:green;">₹<%= specificHomeStayData.price.toLocaleString("en-IN") %> </span><br/>
               <%= specificHomeStayData.location %><br/>
               <%= specificHomeStayData.country %>
             </p>
+            
             <!-- ✅ Buttons aligned properly -->
             <div class="d-flex gap-2 mt-3">
               <form method="POST" action="/Listings/<%= specificHomeStayData._id %>/editHomeStayDesc">
@@ -24,6 +26,7 @@
                 <button type="submit" class="btn btn-danger">Delete</button>
               </form>
             </div>
+            
             <div>
               <hr>
               <h3>Write your valuable feedback</h3>
