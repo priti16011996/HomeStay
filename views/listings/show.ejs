@@ -15,7 +15,11 @@
               <%= specificHomeStayData.location %><br/>
               <%= specificHomeStayData.country %>
             </p>
-            
+            <% if (
+                  currentUser &&
+                  specificHomeStayData.owner &&
+                  specificHomeStayData.owner.toString() === currentUser._id.toString()
+                ) { %>
             <!-- ✅ Buttons aligned properly -->
             <div class="d-flex gap-2 mt-3">
               <form method="POST" action="/Listings/<%= specificHomeStayData._id %>/editHomeStayDesc">
@@ -26,9 +30,10 @@
                 <button type="submit" class="btn btn-danger">Delete</button>
               </form>
             </div>
-            
+            <% } %>
             <div>
               <hr>
+              <% if(currentUser){ %>
               <h3>Write your valuable feedback</h3>
               <form method="POST" action="/listings/<%= specificHomeStayData._id %>/reviews" novalidate class="needs-validation">
                 <label for="rating">Rating</label>
@@ -40,17 +45,19 @@
                 <br>
                 <button type="submit" class="btn btn-success">Submit</button>
               </form>
-              <hr>    
+              <hr> 
+              <% } %>   
+              
               <p><b>All Reviews:</b></p>
               <div class="row">
                   <% specificHomeStayData.reviews.forEach(review => { %>
                 <div class="card col-5 ms-3 mb-3">
                   <div class="card-body">
-                    <h5 class="card-title">Chacha Ji</h5>
+                    <h5 class="card-title">@<%= review.author.username %></h5>
                     <p class="card-text"><strong>Rating:</strong> <%= review.rating %> Stars <br></p>
                     <p class="card-text"><strong>Comment:</strong> <%= review.comment %></p>
                     <form class=""mb-3 method="POST" action="/listings/<%= specificHomeStayData._id %>/reviews/<%= review._id %>?_method=DELETE">
-                    <button class="btn btn-sm btn-danger" >Delete</button>
+                    <button class="btn btn-sm btn-danger" >Delete</button><br>
                   </form>
                   </div>
                 </div>

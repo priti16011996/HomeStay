@@ -29,7 +29,12 @@ router.get("/addNew",isLoggedIn,(req,res)=>{
 
 router.get("/:id",wrapAsync(async(req,res)=>{
     let {id} = req.params;
-    let specificHomeStayData = await Listing.findById(id,).populate("reviews").populate("owner");
+    let specificHomeStayData = await Listing.findById(id,).populate({
+        path:"reviews",
+        populate:{
+            path:"author",
+        }
+        }).populate("owner");
     if(!specificHomeStayData){
        req.flash("error","Home Stay you are looking for does not exist anymore"); 
        res.redirect("/Listings");
