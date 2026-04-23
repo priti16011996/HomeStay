@@ -12,7 +12,7 @@ router.route("/signUp")
 .post(wrapAsync(userController.signUp)); // Create a new user and register them using passport-local-mongoose's register method, which takes care of hashing the password and saving the user to the database. If registration is successful, it redirects to the listings page; otherwise, it catches any errors (like duplicate usernames) and flashes an error message before redirecting back to the signup page.
 
 router.route("/login")
-router.get(userController.renderLoginForm) // login form render
+.get(userController.renderLoginForm) // login form render
 .post(saveRedirectUrl,
     passport.authenticate("local",{
         failureRedirect:"/User/login",

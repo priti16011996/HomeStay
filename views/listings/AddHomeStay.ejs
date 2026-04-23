@@ -4,7 +4,7 @@
         <div class="col-8 offset-2">
         <br/><br/>
         <h2>Enter Your HomeStay Details to add:</h2><br/>
-        <form method="POST" action="/Listings?_method=PUT" novalidate class="needs-validation">
+        <form method="POST" action="/Listings?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
             <div  class="mb-3">
                 <label for="title" class="form-label">Name:</label>
                 <input type="text" name="listing[title]" placeholder="Enter Your Name Of Home Stay" id="title" class="form-control" required/>
@@ -37,9 +37,15 @@
                     <div class="invalid-feedback">Please Enter Valid Country Name</div>
                 </div>
             </div>
-            <div  class="mb-3">
+            <!-- <div  class="mb-3">
                 <label for="image" class="form-label">Image URL Path:</label>
                 <input type="text" name="listing[image]" placeholder="Enter path of your image Url" id="image" class="form-control"/>
+                <div class="valid-feedback">Valid Path</div>
+                <div class="invalid-feedback">Please Enter Valid Path</div>
+            </div> -->
+            <div  class="mb-3">
+                <label for="image" class="form-label">Upload Image:</label>
+                <input type="file" name="listing[image]" placeholder="Enter path of your image Url" id="image" class="form-control"/>
                 <div class="valid-feedback">Valid Path</div>
                 <div class="invalid-feedback">Please Enter Valid Path</div>
             </div>
