@@ -6,8 +6,10 @@ const ExpressError = require("../utils/ExpressError.js");
 const { listingSchema, reviewSchema } = require("../schema.js");
 const {isLoggedIn,isOwner} = require("../middleware.js");
 const listingController = require("../controller/listing.js");
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const multer  = require('multer');
+const { storage } = require("../cloudConfig.js");
+//const upload = multer({ dest: 'uploads/' })
+const upload = multer({ storage })
 //Validation Middleware for Listing Data using JOI
 const validateListing = (req,res,next)=>{
     const {error} = listingSchema.validate(req.body);   
