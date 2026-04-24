@@ -24,17 +24,17 @@ const validateListing = (req,res,next)=>{
 //Home routes with different HTTP methods
 router.route("/")
 .get(wrapAsync(listingController.Index)) //Apply MVC pattern for listing routes
-//.put(isLoggedIn, wrapAsync(listingController.createListing)); // With wrapAsync phase-3 create listing
-.put(upload.single('listing[image]'),(req, res)=>{
-    res.send(req.file);
-} );
+.put(isLoggedIn, upload.single('listing[image]'),validateListing, wrapAsync(listingController.createListing)) // With wrapAsync phase-3 create listing
+// .put(upload.single('listing[image]'),(req, res)=>{
+//     res.send(req.file);
+// } );
 
 //New listing form render route
 router.get("/addNew",isLoggedIn,listingController.renderNewForm);
 
 router.route("/:id")
 .get(wrapAsync(listingController.showListing)) //show route
-.put(isLoggedIn,isOwner,wrapAsync(listingController.updateListing))//Update Home Stay details
+.put(isLoggedIn,isOwner,upload.single('listing[image]'),wrapAsync(listingController.updateListing))//Update Home Stay details
 .delete(isLoggedIn,isOwner, wrapAsync(listingController.deleteListing)) //Delete Home Stay
 
 
