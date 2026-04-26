@@ -44,9 +44,18 @@ const listingSchema = new Schema({
         {
             type:Schema.Types.ObjectId,
             ref:"User",
-        }]
+        }],
+    geometry: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      default: "Point",
+    },
+    coordinates: [Number],
+  },
 });
 
+listingSchema.index({ geometry: "2dsphere" });
 listingSchema.post("findOneAndDelete", async(listing)=>{
     if(listing.reviews.length){
         await Review.deleteMany({_id:{$in: listing.reviews}});
