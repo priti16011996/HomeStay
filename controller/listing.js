@@ -130,29 +130,29 @@ module.exports.updateListing = async(req,res)=>{
         console.log(HomeStayData);
         await HomeStayData.save();
     }
-    // 👇 get location string
-    const locationQuery = `${listingData.location}, ${listingData.country}`;
+    // // 👇 get location string
+    // const locationQuery = `${listingData.location}, ${listingData.country}`;
 
-    // 👇 call Geoapify
-    const geoRes = await axios.get(
-      "https://api.geoapify.com/v1/geocode/search",
-      {
-        params: {
-          text: locationQuery,
-          apiKey: process.env.GEOAPIFY_KEY,
-        },
-      }
-    );
+    // // 👇 call Geoapify
+    // const geoRes = await axios.get(
+    //   "https://api.geoapify.com/v1/geocode/search",
+    //   {
+    //     params: {
+    //       text: locationQuery,
+    //       apiKey: process.env.GEOAPIFY_KEY,
+    //     },
+    //   }
+    // );
 
-    const features = geoRes.data.features;
+    // const features = geoRes.data.features;
 
-    if (!features || features.length === 0) {
-      req.flash("error", "Invalid location");
-      return res.redirect("/listings/new");
-    }
+    // if (!features || features.length === 0) {
+    //   req.flash("error", "Invalid location");
+    //   return res.redirect("/listings/new");
+    // }
 
-    // ⚠️ IMPORTANT: [lon, lat]
-    const coordinates = features[0].geometry.coordinates;
+    // // ⚠️ IMPORTANT: [lon, lat]
+    // const coordinates = features[0].geometry.coordinates;
 
     
     req.flash("success","Home Stay details updated successfully");

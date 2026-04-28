@@ -2,6 +2,7 @@
   <script>
     const coordinates = <%- JSON.stringify(specificHomeStayData.geometry.coordinates) %>;
     const homeStayTitle = "<%= specificHomeStayData.title %>";
+    const GEOAPIFY_KEY = process.env.GEOAPIFY_KEY;
   </script>
   
 <body>
@@ -102,7 +103,7 @@
   console.log("Coordinates:", coordinates);
   const map = new maplibregl.Map({
   container: 'my-map',
-  style: 'https://maps.geoapify.com/v1/styles/klokantech-basic/style.json?apiKey=a93b3435fc2143c894e65eda0a65b493',
+  style: `https://maps.geoapify.com/v1/styles/klokantech-basic/style.json?apiKey=${GEOAPIFY_KEY}`,
   center: coordinates,
   zoom: 14
 });

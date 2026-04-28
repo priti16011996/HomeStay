@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 const Listing = require("./models/listing.js")
 const PORT = "5000";
 const app = express();
-const MONGO_URL ="mongodb://127.0.0.1:27017/HomeStay";
+//const MONGO_URL ="mongodb://127.0.0.1:27017/HomeStay";
+const MONGO_URL = process.env.MONGO_DB_ATLAS;
 const path = require('path');
 const methodOverride = require("method-override");
 const ejsMate = require('ejs-mate');
@@ -21,13 +22,25 @@ const userRoutes = require("./routes/user.js");
 
 
 const session = require("express-session");
+const MongoStore = require('connect-mongo').default;
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
 const flash = require("connect-flash");
+const store = MongoStore.create({ 
+    mongoUrl: MONGO_URL,
+    crypto:{  
+        secret: process.env.SECRET,
+     },
+    touchAfter: 24 * 3600 // time period in seconds    
+});
+store.on("error",(err)=>{
+    console.log("Session Store Error",err );
+})
 const sessionOptions = {
-    secret:"mySecretConsistency",
+    store:store,
+    secret:process.env.SECRET,
     resave:false,
     saveUninitialized:true,
     cookie:{
@@ -36,6 +49,8 @@ const sessionOptions = {
         httpOnly:true
     }
 };
+
+
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -74,9 +89,9 @@ async function main() {
 }
 
 //Home Route
-app.get("/",(req,res)=>{
-    res.send("Hi!, Welcome to Home Stay")
-});
+// app.get("/",(req,res)=>{
+//     res.send("Hi!, Welcome to Home Stay")
+// });
 
 app.use((req,res,next)=>{
     res.locals.successMsg = req.flash("success");
