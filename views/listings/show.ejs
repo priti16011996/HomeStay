@@ -2,7 +2,7 @@
   <script>
     const coordinates = <%- JSON.stringify(specificHomeStayData.geometry.coordinates) %>;
     const homeStayTitle = "<%= specificHomeStayData.title %>";
-    const GEOAPIFY_KEY = process.env.GEOAPIFY_KEY;
+    const GEOAPIFY_KEY = "<%= process.env.GEOAPIFY_KEY %>";
   </script>
   
 <body>
