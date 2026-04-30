@@ -1,0 +1,34 @@
+.nav-hover {
+  position: relative;
+  transition: 0.3s;
+}
+
+.nav-hover:hover {
+  color: #ff385c !important;
+}
+
+.nav-hover::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background: #ff385c;
+  transition: 0.3s;
+}
+
+.nav-hover:hover::after {
+  width: 100%;
+}
+
+.user-menu {
+  background: #f8f9fa;
+  padding: 6px 12px;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.user-menu:hover {
+  background: #e9ecef;
+}

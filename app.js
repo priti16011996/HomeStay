@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const Listing = require("./models/listing.js")
 const PORT = "5000";
 const app = express();
-//const MONGO_URL ="mongodb://127.0.0.1:27017/HomeStay";
-const MONGO_URL = process.env.MONGO_DB_ATLAS;
+const MONGO_URL ="mongodb://127.0.0.1:27017/HomeStay";
+//const MONGO_URL = process.env.MONGO_DB_ATLAS;
 const path = require('path');
 const methodOverride = require("method-override");
 const ejsMate = require('ejs-mate');
@@ -88,17 +88,14 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
-//Home Route
-// app.get("/",(req,res)=>{
-//     res.send("Hi!, Welcome to Home Stay")
-// });
-
 app.use((req,res,next)=>{
     res.locals.successMsg = req.flash("success");
     res.locals.errorMsg = req.flash("error");
-    res.locals.currentUser = req.user;
+    res.locals.currentUser = req.user; // 👈 add this line to set currentUser in res.locals
     next();
 });
+
+
 
 // app.get("/fakeUserRegister", async(req,res)=>{
 //     const fakeUser = new User({
@@ -139,6 +136,10 @@ const validateReview = (req,res,next)=>{
 //     await newListing.save();      
 //     res.send("Listing Route")
 // });
+//Home Route
+app.get("/",(req,res)=>{
+    res.render("listings/landingPage.ejs");
+});
 
 app.use("/Listings", listingsRoutes);
 

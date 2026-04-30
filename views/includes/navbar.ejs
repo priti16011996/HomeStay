@@ -1,24 +1,88 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/Listings"><i class="fa-regular fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-2">
+  <div class="container">
+
+    <!-- LOGO -->
+    <a class="navbar-brand fw-bold text-danger d-flex align-items-center gap-2" href="/">
+      <i class="fa-solid fa-house-chimney"></i>
+      HomeStay
+    </a>
+
+    <!-- TOGGLER -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" href="/Listings">Explore</a>
-      </div>
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/Listings/addNew">Add HomeStay</a>
+
+    <!-- NAV ITEMS -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- LEFT -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link nav-hover" href="/Listings">
+            <i class="fa-solid fa-magnifying-glass me-1"></i> Explore
+          </a>
+        </li>
+      </ul>
+
+      <!-- RIGHT -->
+      <ul class="navbar-nav ms-auto align-items-center gap-2">
+
+        <li class="nav-item">
+          <a class="nav-link nav-hover" href="/Listings/addNew">
+            <i class="fa-solid fa-plus"></i> Add HomeStay
+          </a>
+        </li>
+
         <% if(!currentUser){ %>
-        <a class="nav-link" href="/user/signUp"><b>Sign up</b></a>
-        <a class="nav-link" href="/user/login"><b>Log in</b></a>
-        <% }  %><% if(currentUser){ %>
-        <span class="nav-link"><b>Welcome, <%= currentUser.username %></b></span> 
-        <a class="nav-link" href="/user/logout"><b>Logout</b></a>
-        <%} %>
-      </div>
+
+          <li class="nav-item">
+            <a class="btn btn-outline-dark btn-sm rounded-pill px-3" href="/user/login">
+              Login
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="btn btn-danger btn-sm rounded-pill px-3" href="/user/signUp">
+              Sign Up
+            </a>
+          </li>
+
+        <% } else { %>
+
+          <!-- USER DROPDOWN -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 user-menu"
+               href="#" role="button" data-bs-toggle="dropdown">
+
+              <i class="fa-solid fa-circle-user fs-5"></i>
+              <span><%= currentUser.username %></span>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+              <li>
+                <a class="dropdown-item" href="#">
+                  <i class="fa-solid fa-user me-2"></i> Profile
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="/Listings/addNew">
+                  <i class="fa-solid fa-plus me-2"></i> Add Listing
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item text-danger" href="/user/logout">
+                  <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        <% } %>
+
+      </ul>
     </div>
+    <span><%= locals.currentUser %></span>
     
+          
   </div>
 </nav>
