@@ -1,0 +1,37 @@
+.auth-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        padding: 30px;
+        background: #fff;
+    }
+
+    .form-control {
+        border-radius: 10px;
+    }
+
+    .btn-auth {
+        background: #4CAF50;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .btn-auth:hover {
+        background: #43a047;
+    }
+
+    .auth-title {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .password-toggle {
+        position: absolute;
+        top: 38px;
+        right: 15px;
+        cursor: pointer;
+        font-size: 18px;
+    }

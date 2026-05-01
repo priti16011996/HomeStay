@@ -1,57 +1,72 @@
 <% layout("/layouts/boilerplate.ejs")  %>
-<body>
-    <div class="row">
-        <div class="col-8 offset-2">
-        <br/><br/>
-        <h2>Enter Your HomeStay Details to add:</h2><br/>
-        <form method="POST" action="/Listings?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
-            <div  class="mb-3">
-                <label for="title" class="form-label">Name:</label>
-                <input type="text" name="listing[title]" placeholder="Enter Your Name Of Home Stay" id="title" class="form-control" required/>
-                <div class="valid-feedback">Title Looks Good!</div>
-                <div class="invalid-feedback">Please Enter Valid Title</div>
-            </div>
-            <div  class="mb-3">
-                <label for="description" class="form-label">Description:</label>
-                <textarea name="listing[description]" id="description" placeholder="Describe your Home Stay" class="form-control" required></textarea>
-                <div class="valid-feedback">Description Looks Good!</div>
-                <div class="invalid-feedback">Please Enter Valid Description</div>
-            </div>
-            <div  class="mb-3">
-                <label for="location" class="form-label">Location:</label>
-                <input type="text" name="listing[location]" placeholder="Enter home stay location" id="location" class="form-control" required/>
-                <div class="valid-feedback">Correct Location</div>
-                <div class="invalid-feedback">Please Enter Valid Location</div>
-            </div>
-            <div class="row">
-                <div  class="col-md-4 mb-3">
-                    <label for="price" class="form-label">Price:</label>
-                    <input type="text" name="listing[price]" placeholder="Enter Price for Home Stay" id="price" class="form-control" required/>
-                    <div class="valid-feedback">Price Looks Good!</div>
-                    <div class="invalid-feedback">Please Enter Valid Price</div>
+<div class="add-listing-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+
+                <div class="form-card">
+
+                    <h2 class="text-center form-title mb-4">🏡 Add Your Homestay</h2>
+
+                    <form method="POST" action="/Listings?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label class="form-label">Homestay Name</label>
+                            <input type="text" name="listing[title]" class="form-control" placeholder="Enter homestay name" required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea name="listing[description]" class="form-control" rows="3" placeholder="Describe your homestay..." required></textarea>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="mb-3">
+                            <label class="form-label">Location</label>
+                            <input type="text" name="listing[location]" class="form-control" placeholder="City / Area" required>
+                        </div>
+
+                        <!-- Price + Country -->
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Price (₹)</label>
+                                <input type="number" name="listing[price]" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label">Country</label>
+                                <input type="text" name="listing[country]" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="mb-3">
+                            <label class="form-label">Upload Image</label>
+                            <input type="file" name="listing[image]" id="imageInput" class="form-control" accept="image/*" required>
+                            <img id="preview" class="image-preview" />
+                        </div>
+
+                        <button class="btn btn-add w-100 mt-3">Add Homestay</button>
+
+                    </form>
+
                 </div>
-                <div  class="col-md-8 mb-3">
-                    <label for="country" class="form-label">Country:</label>
-                    <input type="text" name="listing[country]" placeholder="Enter your counter" id="country" class="form-control" required/>
-                    <div class="valid-feedback">Valid Country Name</div>
-                    <div class="invalid-feedback">Please Enter Valid Country Name</div>
-                </div>
+
             </div>
-            <!-- <div  class="mb-3">
-                <label for="image" class="form-label">Image URL Path:</label>
-                <input type="text" name="listing[image]" placeholder="Enter path of your image Url" id="image" class="form-control"/>
-                <div class="valid-feedback">Valid Path</div>
-                <div class="invalid-feedback">Please Enter Valid Path</div>
-            </div> -->
-            <div  class="mb-3">
-                <label for="image" class="form-label">Upload Image:</label>
-                <input type="file" name="listing[image]" placeholder="Enter path of your image Url" id="image" class="form-control" required/>
-                <div class="valid-feedback">Valid Path</div>
-                <div class="invalid-feedback">Please Enter Valid Path</div>
-            </div>
-            
-            <button class="btn btn-dark add-btn">Add</button><br/><br/><br/>
-        </form>
         </div>
     </div>
-</body>
+</div>
+<script>
+    const imageInput = document.getElementById("imageInput");
+    const preview = document.getElementById("preview");
+
+    imageInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+        }
+    });
+</script>

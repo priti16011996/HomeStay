@@ -5,97 +5,138 @@
     const GEOAPIFY_KEY = "<%= process.env.GEOAPIFY_KEY %>";
   </script>
   
-<body>
-    <div class="row mt-2">
-      <div class="col-8 offset-2">
-          <h2><i><%= specificHomeStayData.title %></h2><br>
-      </div>
-      <div class="col-6 offset-2 fs-6">
-        <div class="card listing-card" >
-          <img src="<%= specificHomeStayData.image.url %>" class="card-img-top show-img" alt="ListingItem Image">
-          <div class="card-body">
-            <p class="card-text">
-              <b>Property is listed By@</b><i><%= specificHomeStayData.owner[0].username %></i><br/>
-              <%= specificHomeStayData.description %><br/>
-              <span style="color:green;">₹<%= specificHomeStayData.price.toLocaleString("en-IN") %> </span><br/>
-              <%= specificHomeStayData.location %><br/>
-              <%= specificHomeStayData.country %>
-            </p>
-           
-            <% if (
-                  currentUser &&
-                  specificHomeStayData.owner &&
-                  specificHomeStayData.owner[0]._id.toString() === currentUser._id.toString()
-                ) { %>
-            <!-- ✅ Buttons aligned properly -->
-            <div class="d-flex gap-2 mt-3">
-              <form method="POST" action="/Listings/<%= specificHomeStayData._id %>/editHomeStayDesc">
-                <button type="submit" class="btn btn-primary">Edit</button>
-              </form>
+<div class="show-page">
+<div class="container">
 
-              <form method="POST" action="/Listings/<%= specificHomeStayData._id %>?_method=DELETE">
-                <button type="submit" class="btn btn-danger">Delete</button>
-              </form>
-            </div>
-            <% } %>
-            <div>
-              <hr>
-              <p>Home Stay(<%= specificHomeStayData.title %>) Map Location</p>
-              <div id="my-map" style="width: 100%; height: 400px;"></div>
-              <hr>
-              <% if(currentUser){ %>
-              <h3>Write your valuable feedback</h3>
-              <form method="POST" action="/listings/<%= specificHomeStayData._id %>/reviews" novalidate class="needs-validation">
-                <label for="no-rate">Rating</label>
-                <fieldset class="starability-slot">
-                  <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
-                  <input type="radio" id="first-rate1" name="review[rating]" id="rating" value="1" />
-                  <label for="first-rate1" title="Terrible">1 star</label>
-                  <input type="radio" id="first-rate2" name="review[rating]" id="rating"  value="2" />
-                  <label for="first-rate2" title="Not good">2 stars</label>
-                  <input type="radio" id="first-rate3" name="review[rating]" id="rating"  value="3" />
-                  <label for="first-rate3" title="Average">3 stars</label>
-                  <input type="radio" id="first-rate4" name="review[rating]" id="rating" value="4" />
-                  <label for="first-rate4" title="Very good">4 stars</label>
-                  <input type="radio" id="first-rate5" name="review[rating]" id="rating" value="5" />
-                  <label for="first-rate5" title="Amazing">5 stars</label>
-                </fieldset>
-                <label for="comment">Comment</label><br>  
-                <textarea id="comment" name="review[comment]" rows="5" cols="50" required></textarea>
-                <br>
-                <div class="invalid-feedback">Please add your valuable feedback</div>
-                <br>
-                <button type="submit" class="btn btn-success">Submit</button>
-              </form>
-              <hr> 
-              <% } %>   
-              <p><b>All Reviews:</b></p>
-              <div class="row">
-                  <% specificHomeStayData.reviews.forEach(review => { %>
-                <div class="card col-5 ms-3 mb-3">
-                  <h5 class="card-title">@<%= review.author.username %></h5>
-                  <div class="card-body">
-                    <p class="starability-result card-text" data-rating="<%= review.rating %>">
-                      <%= review.rating %>
-                    </p><br>
-                    <p class="card-text"><strong>Comment:</strong> <%= review.comment %></p>
-                    <form class=""mb-3 method="POST" action="/listings/<%= specificHomeStayData._id %>/reviews/<%= review._id %>?_method=DELETE"><br>
-                    <button class="btn btn-sm btn-danger mb-3" >Delete</button><br>
-                  </form>
-                  </div>
-                </div>
-              <% }) %>
-              </div>
-              
-            
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- Title -->
+    <h2 class="mb-3"><%= specificHomeStayData.title %></h2>
+
+    <!-- Image -->
+    <div class="card listing-card mb-4">
+        <img src="<%= specificHomeStayData.image.url %>" class="card-img-top show-img">
     </div>
-    
-  </body>
 
+    <!-- Main Info -->
+    <div class="row">
+        <div class="col-lg-8">
+
+            <div class="info-box">
+                <p><b>Hosted by:</b> @<%= specificHomeStayData.owner[0].username %></p>
+                <p><%= specificHomeStayData.description %></p>
+
+                <p class="price">₹<%= specificHomeStayData.price.toLocaleString("en-IN") %></p>
+
+                <p><b>Location:</b> <%= specificHomeStayData.location %>, <%= specificHomeStayData.country %></p>
+            </div>
+
+            <!-- Edit/Delete -->
+            <% if (
+                currentUser &&
+                specificHomeStayData.owner &&
+                specificHomeStayData.owner[0]._id.toString() === currentUser._id.toString()
+            ) { %>
+
+            <div class="btn-group-custom d-flex gap-2 mt-3">
+                <form method="POST" action="/Listings/<%= specificHomeStayData._id %>/editHomeStayDesc">
+                    <button class="btn btn-primary">Edit</button>
+                </form>
+
+                <form method="POST" action="/Listings/<%= specificHomeStayData._id %>?_method=DELETE">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+
+            <% } %>
+
+            <!-- Reviews -->
+            <div class="info-box mt-4">
+                <h4>Reviews</h4>
+
+                <% specificHomeStayData.reviews.forEach(review => { %>
+                <div class="card review-card p-3 mb-3">
+                    <h6>@<%= review.author.username %></h6>
+                    <p>⭐ <%= review.rating %>/5</p>
+                    <p><%= review.comment %></p>
+
+                    <form method="POST" action="/listings/<%= specificHomeStayData._id %>/reviews/<%= review._id %>?_method=DELETE">
+                        <button class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+                <% }) %>
+            </div>
+
+        </div>
+
+        <!-- Right Side -->
+        <div class="col-lg-4">
+
+            <!-- Map -->
+            <div class="info-box">
+                <h5>📍 Location Map</h5>
+                <div id="my-map" style="height:300px; border-radius:10px;"></div>
+                <button class="btn btn-outline-dark w-100 mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#mapModal">
+                  📍 View Full Map
+              </button>
+            </div>
+
+            <!-- Add Review -->
+          <% if(currentUser){ %>
+          <div class="info-box mt-3">
+              <h5>Add Review</h5>
+
+              <form method="POST" action="/listings/<%= specificHomeStayData._id %>/reviews" novalidate class="needs-validation">
+
+                  <!-- ⭐ Star Rating (your original system) -->
+                  <label class="mb-2">Rating</label>
+                  <fieldset class="starability-slot mb-3">
+                      <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+
+                      <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                      <label for="first-rate1" title="Terrible">1 star</label>
+
+                      <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                      <label for="first-rate2" title="Not good">2 stars</label>
+
+                      <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                      <label for="first-rate3" title="Average">3 stars</label>
+
+                      <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                      <label for="first-rate4" title="Very good">4 stars</label>
+
+                      <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                      <label for="first-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
+
+                  <!-- Comment -->
+                  <textarea name="review[comment]" class="form-control mb-2" placeholder="Write your feedback..." required></textarea>
+                  <div class="invalid-feedback">Please add your feedback</div>
+
+                  <button class="btn btn-success w-100 mt-2">Submit</button>
+              </form>
+          </div>
+          <% } %>
+
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="modal fade" id="mapModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">📍 <%= specificHomeStayData.title %> Location</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div id="popup-map" style="width:100%; height:500px;"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
   <script>
   if (!coordinates) {
     console.error("No geometry found");
@@ -121,5 +162,38 @@ map.on('load', () => {
 });
 
 map.addControl(new maplibregl.NavigationControl());
-  
+document.getElementById("my-map").addEventListener("click", () => {
+    const modal = new bootstrap.Modal(document.getElementById('mapModal'));
+    modal.show();
+}); 
+
+let popupMap;
+
+document.getElementById('mapModal').addEventListener('shown.bs.modal', function () {
+
+    if (!popupMap) {
+        popupMap = new maplibregl.Map({
+            container: 'popup-map',
+            style: `https://maps.geoapify.com/v1/styles/klokantech-basic/style.json?apiKey=${GEOAPIFY_KEY}`,
+            center: coordinates,
+            zoom: 14
+        });
+
+        new maplibregl.Marker({ color: "red" })
+            .setLngLat(coordinates)
+            .setPopup(new maplibregl.Popup().setText(homeStayTitle))
+            .addTo(popupMap);
+
+        popupMap.addControl(new maplibregl.NavigationControl());
+
+        // 🔥 CRITICAL FIX
+        popupMap.on('load', () => {
+            popupMap.resize();
+        });
+
+    } else {
+        // 🔥 Also needed when reopening modal
+        popupMap.resize();
+    }
+});
 </script>

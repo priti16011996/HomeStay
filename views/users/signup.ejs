@@ -1,36 +1,61 @@
 <% layout("/layouts/boilerplate.ejs") %>
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 50vh;">
+    
+    <div class="col-md-5">
+        <div class="auth-card">
 
-<body>
-<div class="row mt-3">
-    <h1 class="text-center">SignUp On HomeStay</h1>
+            <h2 class="text-center auth-title mb-4">🏡 Create Account</h2>
 
-    <div class="col-6 offset-3">
-        <form method="POST" action="/User/signUp" class="needs-validation" novalidate>
+            <form method="POST" action="/User/signUp" class="needs-validation" novalidate>
 
-            <div class="mb-3">
-                <label for="username" class="form-label">Username:</label>
-                <input type="text" name="username" id="username" class="form-control" required />
-                <div class="valid-feedback">Looks Good!</div>
-                <div class="invalid-feedback">Please Enter Valid Username</div>
-            </div>
+                <!-- Username -->
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" placeholder="Enter username" required>
+                    <div class="invalid-feedback">Please enter a valid username</div>
+                </div>
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" name="email" id="email" class="form-control" required />
-                <div class="valid-feedback">Looks Good!</div>
-                <div class="invalid-feedback">Please Enter Valid Email</div>
-            </div>
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+                    <div class="invalid-feedback">Please enter a valid email</div>
+                </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
-                <input type="password" name="password" id="password" class="form-control" required />
-                <div class="valid-feedback">Looks Good!</div>
-                <div class="invalid-feedback">Please Enter Valid password</div>
-            </div>
+                <!-- Password with eye -->
+                <div class="mb-3 position-relative">
+                    <label class="form-label">Password</label>
 
-            <button class="btn btn-dark w-100 mt-3">SignUp</button>
+                    <input type="password" name="password" class="form-control password-field" placeholder="Enter password" required>
 
-        </form>
+                    <i class="bi bi-eye-slash password-toggle toggle-password"></i>
+
+                    <div class="invalid-feedback">Please enter a valid password</div>
+                </div>
+
+                <button class="btn btn-auth w-100 mt-3">Sign Up</button>
+
+                <p class="text-center mt-3">
+                    Already have an account? 
+                    <a href="/User/login">Login</a>
+                </p>
+
+            </form>
+
+        </div>
     </div>
+
 </div>
-</body>
+
+<script>
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+
+    togglePassword.addEventListener("click", function () {
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+
+        this.classList.toggle("bi-eye");
+        this.classList.toggle("bi-eye-slash");
+    });
+</script>
