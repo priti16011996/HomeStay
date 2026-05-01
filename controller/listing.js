@@ -109,7 +109,7 @@ module.exports.renderEditForm = async(req, res) => {
         return res.redirect("/Listings");
     }
     let originalImageUrl = HomeStayData.image.url;
-    const geometry = JSON.stringify(specificHomeStayData);
+    const geometry = JSON.stringify(HomeStayData.image.url);
     originalImageUrl = originalImageUrl.replace("/upload","/upload/h_100,w_100");
     res.render("listings/EditHomeStayInfo.ejs", { HomeStayData,originalImageUrl,geometry }); 
 }

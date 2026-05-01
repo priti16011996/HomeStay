@@ -1,63 +1,162 @@
-<% layout("/layouts/boilerplate.ejs") %>
+<%- layout("/layouts/boilerplate.ejs") %>
+<div class="page">
 
-    <body>
-        <div class="row">
-            <div class="col-8 offset-2 mt-3">
-                <h2>To Edit Home Stay Enter Details:</h2>
-                <form method="POST" action="/Listings/<%= HomeStayData._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Name:</label>
-                        <input type="text" name="listing[title]" value="<%= HomeStayData.title %>" id="title"
-                            class="form-control" required/>
-                            <div class="valid-feedback">Title Looks Good!</div>
-                            <div class="invalid-feedback">Please Enter Valid Title</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Decription:</label>
-                        <textarea name="listing[description]" id="description" class="form-control" required>
-                            <%= HomeStayData.description %></textarea>
-                            <div class="valid-feedback">Description Looks Good!</div>
-                            <div class="invalid-feedback">Please Enter Valid Description</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="location" class="form-label">Location:</label>
-                        <input type="text" name="listing[location]" value="<%= HomeStayData.location %>" id="location"
-                            class="form-control" required/>
-                            <div class="valid-feedback">Correct Location</div>
-                            <div class="invalid-feedback">Please Enter Valid Location</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <label for="price" class="form-label">Price:</label>
-                            <input type="text" name="listing[price]" value="<%= HomeStayData.price %>" id="price"
-                                class="form-control" required/>
-                                <div class="valid-feedback">Price Looks Good!</div>
-                                <div class="invalid-feedback">Please Enter Valid Price</div>
-                        </div>
-                        <div class="col-md-8 mb-3">
-                            <label for="country" class="form-label">Country:</label>
-                            <input type="text" name="listing[country]" value="<%= HomeStayData.country %>" id="country"
-                                class="form-control" required/>
-                                <div class="valid-feedback">Valid Country Name</div>
-                                <div class="invalid-feedback">Please Enter Valid Country Name</div>
-                        </div>
-                    </div>
-                    <!-- <div class="mb-3">
-                        <label for="image" class="form-label">Image URL:</label>
-                        <input type="text" name="listing[image][url]"  value="<%= HomeStayData.image.url %>" id="image"
-                            class="form-control" required/>
-                    </div> -->
-                    <div class="mb-3">  
-                        <label for="image" class="form-label">Current Image:</label><br>
-                        <img src="<%= originalImageUrl %>"  alt="Home Stay Image" class="img-thumbnail"/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Choose to Update Image URL:</label>
-                        <input type="file" name="listing[image]" id="image" class="form-control" required/>
-                    </div>
+  <div class="page-header">
+    <a href="/Listings/<%= HomeStayData._id %>" class="back-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8"
+           stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      Back
+    </a>
+    <h1 class="page-title">Edit homestay</h1>
+  </div>
 
-                    <button class="btn btn-dark edit-btn mt-3">Edit</button>
-                </form>
-            </div>
+  <div class="edit-grid">
+
+    <!-- LEFT: form -->
+    <div class="card">
+      <p class="card-heading">Listing details</p>
+
+      <form method="POST"
+            action="/Listings/<%= HomeStayData._id %>?_method=PUT"
+            enctype="multipart/form-data">
+
+        <div class="field">
+          <label for="inp-title">Name</label>
+          <input type="text"
+                 id="inp-title"
+                 name="listing[title]"
+                 value="<%= HomeStayData.title %>"
+                 oninput="syncPreview()"
+                 placeholder="Enter homestay name">
         </div>
-    </body>
+
+        <div class="field">
+          <label for="inp-desc">Description</label>
+          <textarea id="inp-desc"
+                    name="listing[description]"
+                    oninput="syncPreview()"
+                    placeholder="Describe your space…"><%= HomeStayData.description %></textarea>
+        </div>
+
+        <div class="field">
+          <label for="inp-location">Location</label>
+          <input type="text"
+                 id="inp-location"
+                 name="listing[location]"
+                 value="<%= HomeStayData.location %>"
+                 oninput="syncPreview()"
+                 placeholder="City, State">
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="inp-price">Price / night (₹)</label>
+            <input type="number"
+                   id="inp-price"
+                   name="listing[price]"
+                   value="<%= HomeStayData.price %>"
+                   oninput="syncPreview()"
+                   placeholder="0">
+          </div>
+          <div class="field">
+            <label for="inp-country">Country</label>
+            <input type="text"
+                   id="inp-country"
+                   name="listing[country]"
+                   value="<%= HomeStayData.country %>"
+                   oninput="syncPreview()"
+                   placeholder="India">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Update image</label>
+          <div class="upload-zone" id="upload-zone">
+            <input type="file"
+                   name="listing[image]"
+                   accept="image/*"
+                   onchange="handleFileChange(event)">
+            <div class="upload-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </div>
+            <p class="upload-text"><span>Click to upload</span> or drag &amp; drop</p>
+            <p id="file-name-display"></p>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <a href="/Listings/<%= HomeStayData._id %>" class="btn-cancel">Cancel</a>
+          <button type="submit" class="btn-save">Save changes</button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- RIGHT: live preview -->
+    <div class="card preview-card">
+      <p class="card-heading">Live preview</p>
+
+      <div class="preview-img-wrap">
+        <img id="preview-img"
+             src="<%= originalImageUrl %>"
+             alt="Listing preview">
+        <div class="img-overlay">
+          <div class="overlay-title" id="prev-title"><%= HomeStayData.title %></div>
+          <div class="overlay-price" id="prev-price">₹<%= HomeStayData.price.toLocaleString('en-IN') %> / night</div>
+        </div>
+      </div>
+
+      <div class="meta-tiles">
+        <div class="meta-tile">
+          <div class="meta-tile-label">Location</div>
+          <div class="meta-tile-val" id="prev-location"><%= HomeStayData.location %></div>
+        </div>
+        <div class="meta-tile">
+          <div class="meta-tile-label">Country</div>
+          <div class="meta-tile-val" id="prev-country"><%= HomeStayData.country %></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="preview-desc" id="prev-desc"><%= HomeStayData.description %></p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function syncPreview() {
+    const title   = document.getElementById('inp-title').value;
+    const price   = parseInt(document.getElementById('inp-price').value) || 0;
+    const loc     = document.getElementById('inp-location').value;
+    const country = document.getElementById('inp-country').value;
+    const desc    = document.getElementById('inp-desc').value;
+
+    document.getElementById('prev-title').textContent    = title   || 'Homestay name';
+    document.getElementById('prev-price').textContent    = '₹' + price.toLocaleString('en-IN') + ' / night';
+    document.getElementById('prev-location').textContent = loc     || '—';
+    document.getElementById('prev-country').textContent  = country || '—';
+    document.getElementById('prev-desc').textContent     = desc    || '';
+  }
+
+  function handleFileChange(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    document.getElementById('file-name-display').textContent = file.name;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('preview-img').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
