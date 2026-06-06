@@ -1,12 +1,14 @@
 # 🏡 HomeStay
 
-A modern full-stack property listing platform built with **Node.js, Express.js, MongoDB, React.js, and Cloudinary**. HomeStay allows users to discover, list, and manage rental properties with secure authentication, image uploads, booking inquiries, and role-based access control.
+A modern full-stack accommodation listing platform built with **Node.js, Express.js, MongoDB, EJS, Bootstrap, Cloudinary, and Geoapify Maps**. HomeStay allows users to discover unique stays, create and manage property listings, upload images, explore locations through interactive maps, and share their experiences through reviews and ratings.
 
 ---
 
 ## 📖 Overview
 
-HomeStay is designed to simplify property discovery and management. Travelers can browse accommodations, view detailed property information, and connect with hosts, while property owners can create and manage listings through an intuitive dashboard.
+HomeStay is a property listing and discovery platform inspired by modern accommodation marketplaces. Users can browse properties, search listings by location, view detailed property information, explore properties on an interactive map, and leave reviews for places they have visited.
+
+The application focuses on providing a seamless user experience while demonstrating full-stack web development concepts including authentication, CRUD operations, image management, geolocation services, and responsive design.
 
 ---
 
@@ -19,43 +21,53 @@ HomeStay is designed to simplify property discovery and management. Travelers ca
 * JWT-Based Authentication
 * Protected Routes
 * Role-Based Access Control (RBAC)
-* User Profile Management
+* User Session Management
 
-### 🏠 Property Management
+### 🏠 Listing Management
 
-* Create Property Listings
-* Update Property Details
+* Create New Property Listings
+* Edit Existing Listings
 * Delete Listings
+* View Detailed Listing Information
+* Manage Personal Listings
 * Upload Property Images
-* View Property Information
-* Manage Listed Properties
 
 ### 🔍 Search & Discovery
 
-* Browse Available Properties
-* Search Listings by Title or Location
-* Filter Properties
-* Property Detail Pages
+* Browse All Listings
+* Search Properties by Title
+* Search Properties by Location
+* Responsive Listing Cards
+* Detailed Property Pages
 
-### 📩 Booking & Inquiries
+### ⭐ Reviews & Ratings
 
-* Send Booking Requests
-* Contact Property Owners
-* Manage Property Inquiries
+* Add Reviews to Listings
+* Rate Properties
+* View Community Feedback
+* Review Management
+
+### 🗺️ Maps & Location Services
+
+* Geoapify Maps Integration
+* Interactive Property Locations
+* Geocoding Support
+* Enhanced Location Discovery
 
 ### ☁️ Cloud Storage
 
 * Cloudinary Image Uploads
 * Optimized Image Delivery
-* Secure Media Management
+* Secure Media Storage
+* Cloud-Based Image Management
 
 ### 🛡️ Security
 
 * Authentication Middleware
 * Authorization Checks
 * Input Validation
-* Environment Variable Protection
-* Secure API Endpoints
+* Secure Environment Variables
+* Protected API Endpoints
 
 ---
 
@@ -63,10 +75,12 @@ HomeStay is designed to simplify property discovery and management. Travelers ca
 
 ### Frontend
 
-* React.js
-* React Router
-* Axios
-* Bootstrap / Tailwind CSS
+* HTML5
+* CSS3
+* Bootstrap 5
+* JavaScript
+* EJS (Embedded JavaScript Templates)
+* Font Awesome 4
 
 ### Backend
 
@@ -78,18 +92,20 @@ HomeStay is designed to simplify property discovery and management. Travelers ca
 * MongoDB Atlas
 * Mongoose ODM
 
-### Cloud Services
-
-* Cloudinary
-
-### Authentication
+### Authentication & Security
 
 * JWT (JSON Web Tokens)
 * bcrypt.js
+* Cookie Parser
+
+### Cloud & External Services
+
+* Cloudinary (Image Storage & Optimization)
+* Geoapify Maps API (Maps & Geolocation)
 
 ### Deployment
 
-* AWS Elastic Beanstalk
+* Render
 * MongoDB Atlas
 
 ---
@@ -99,24 +115,29 @@ HomeStay is designed to simplify property discovery and management. Travelers ca
 ```text
 HomeStay/
 │
-├── client/
-│   ├── src/
-│   ├── public/
-│   ├── components/
-│   ├── pages/
-│   └── services/
+├── public/
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   └── uploads/
 │
-├── server/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   ├── config/
-│   └── utils/
+├── views/
+│   ├── includes/
+│   ├── layouts/
+│   ├── listings/
+│   ├── reviews/
+│   └── users/
 │
-├── uploads/
-├── .env
+├── routes/
+├── controllers/
+├── models/
+├── middlewares/
+├── utils/
+├── config/
+│
+├── app.js
 ├── package.json
+├── .env
 └── README.md
 ```
 
@@ -133,84 +154,72 @@ cd HomeStay
 
 ### 2. Install Dependencies
 
-Backend
-
 ```bash
-npm install
-```
-
-Frontend
-
-```bash
-cd client
 npm install
 ```
 
 ### 3. Configure Environment Variables
 
-Create a `.env` file:
+Create a `.env` file in the root directory:
 
 ```env
-PORT=5000
+PORT=8000
 
-MONGO_URI=your_mongodb_connection_string
+MONGO_URL=your_mongodb_connection_string
 
 JWT_SECRET=your_secret_key
 
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+
+GEOAPIFY_API_KEY=your_geoapify_api_key
 ```
 
 ### 4. Start Development Server
-
-Backend
 
 ```bash
 npm run dev
 ```
 
-Frontend
+### 5. Start Production Server
 
 ```bash
-cd client
 npm start
-```
-
-### 5. Build Production Version
-
-```bash
-npm run build
 ```
 
 ---
 
-## 🌐 API Routes
+## 🌐 Application Routes
 
 ### Authentication
 
-| Method | Route              | Description   |
-| ------ | ------------------ | ------------- |
-| POST   | /api/auth/register | Register User |
-| POST   | /api/auth/login    | Login User    |
-| GET    | /api/auth/profile  | User Profile  |
+| Method | Route   | Description       |
+| ------ | ------- | ----------------- |
+| GET    | /signup | Signup Page       |
+| POST   | /signup | Register User     |
+| GET    | /login  | Login Page        |
+| POST   | /login  | Authenticate User |
+| GET    | /logout | Logout User       |
 
-### Properties
+### Listings
 
-| Method | Route               | Description          |
-| ------ | ------------------- | -------------------- |
-| GET    | /api/properties     | Get All Listings     |
-| GET    | /api/properties/:id | Get Property Details |
-| POST   | /api/properties     | Create Property      |
-| PUT    | /api/properties/:id | Update Property      |
-| DELETE | /api/properties/:id | Delete Property      |
+| Method | Route              | Description         |
+| ------ | ------------------ | ------------------- |
+| GET    | /listings          | View All Listings   |
+| GET    | /listings/new      | Create Listing Page |
+| POST   | /listings          | Create Listing      |
+| GET    | /listings/:id      | Listing Details     |
+| GET    | /listings/:id/edit | Edit Listing Page   |
+| PUT    | /listings/:id      | Update Listing      |
+| DELETE | /listings/:id      | Delete Listing      |
 
-### Bookings
+### Reviews
 
-| Method | Route         | Description            |
-| ------ | ------------- | ---------------------- |
-| POST   | /api/bookings | Create Booking Request |
-| GET    | /api/bookings | Get User Bookings      |
+| Method | Route                           | Description   |
+| ------ | ------------------------------- | ------------- |
+| POST   | /listings/:id/reviews           | Add Review    |
+| DELETE | /listings/:id/reviews/:reviewId | Delete Review |
 
 ---
 
@@ -220,65 +229,80 @@ npm run build
 
 ```javascript
 {
-  fullName: String,
+  username: String,
   email: String,
-  password: String,
-  role: String,
-  profileImage: String
+  password: String
 }
 ```
 
-### Property
+### Listing
 
 ```javascript
 {
   title: String,
   description: String,
-  location: String,
+  image: String,
   price: Number,
-  images: [String],
-  amenities: [String],
-  createdBy: ObjectId,
+  location: String,
+  country: String,
+  owner: ObjectId,
   createdAt: Date
 }
 ```
 
-### Booking
+### Review
 
 ```javascript
 {
-  propertyId: ObjectId,
-  userId: ObjectId,
-  checkInDate: Date,
-  checkOutDate: Date,
-  status: String
+  comment: String,
+  rating: Number,
+  author: ObjectId,
+  listing: ObjectId,
+  createdAt: Date
 }
 ```
 
 ---
 
-## ☁️ AWS Elastic Beanstalk Deployment
+## 🚀 Key Highlights
 
-```bash
-eb init
-eb create
-eb deploy
-```
+* Full-Stack MVC Architecture
+* Server-Side Rendering with EJS
+* RESTful Routing
+* JWT Authentication
+* CRUD Operations
+* Cloudinary Image Management
+* Geoapify Maps Integration
+* Review & Rating System
+* Responsive UI with Bootstrap
+* MongoDB Atlas Database
+* Render Deployment
 
 ---
 
-## 🚀 Future Enhancements
+## ☁️ Deployment
 
-* Property Reviews & Ratings
+### Render Deployment
+
+```bash
+git push origin main
+```
+
+The application is deployed on Render with MongoDB Atlas as the cloud database and Cloudinary for image storage.
+
+---
+
+## 📈 Future Enhancements
+
+* Advanced Search Filters
+* Property Categories
 * Wishlist Functionality
-* Google Maps Integration
-* Real-Time Notifications
-* Online Payments (Stripe/Razorpay)
+* User Profiles
+* Recently Viewed Listings
+* Email Notifications
 * Admin Dashboard
-* Property Availability Calendar
-* Email Verification
-* Multi-Image Gallery
-* CI/CD with GitHub Actions
+* Property Availability Tracking
+* Social Login Integration
 
 ---
 
@@ -287,7 +311,7 @@ eb deploy
 1. Fork the repository
 2. Create a feature branch
 3. Commit your changes
-4. Push your branch
+4. Push the branch
 5. Open a Pull Request
 
 ---
@@ -300,25 +324,35 @@ This project is licensed under the MIT License.
 
 ## 🌍 Live Demo
 
-Add your deployed application URL here.
+Add your deployed Render URL here:
 
 ```text
-https://your-homestay-app-url.com
+https://your-homestay-app.onrender.com
 ```
 
 ---
 
 ## 📸 Project Screenshots
 
-Add screenshots of:
+### Home Page
 
-* Home Page
-* Property Listings
-* Property Details Page
-* User Dashboard
-* Create Listing Page
-* Booking Page
-* Mobile Responsive View
+*Add screenshot here*
+
+### Listing Details
+
+*Add screenshot here*
+
+### Create Listing
+
+*Add screenshot here*
+
+### Reviews Section
+
+*Add screenshot here*
+
+### Interactive Maps
+
+*Add screenshot here*
 
 ---
 
@@ -326,8 +360,8 @@ Add screenshots of:
 
 **Priti Maurya**
 
-* Full Stack Developer (MERN)
-* AWS Cloud Enthusiast
-* Backend & System Design Learner
+* Full Stack Developer
+* MERN Stack Enthusiast
+* Backend & Cloud Computing Learner
 
 If you found this project useful, consider giving it a ⭐ on GitHub.
