@@ -148,7 +148,7 @@ HomeStay/
 ### 1. Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/priti16011996/HomeStay
 cd HomeStay
 ```
 
@@ -349,38 +349,6 @@ https://your-homestay-app.onrender.com
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e346fad1-88ff-4e66-8f89-096bf2a96cd7" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/531fe330-2852-4afe-8a84-5a603dd09f7f" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8953ad19-b401-4f7f-b905-a4531e676020" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*Add screenshot here*
-
-### Listing Details
-
-*Add screenshot here*
-
-### Create Listing
-
-*Add screenshot here*
-
-### Reviews Section
-
-*Add screenshot here*
-
-### Interactive Maps
-
-*Add screenshot here*
 
 ---
 
