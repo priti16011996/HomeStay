@@ -326,7 +326,7 @@ This project is licensed under the MIT License.
 
 Add your deployed Render URL here:
 
-```text
+```
 https://your-homestay-app.onrender.com
 ```
 
@@ -334,7 +334,35 @@ https://your-homestay-app.onrender.com
 
 ## 📸 Project Screenshots
 
-### Home Page
+<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/4aa055e5-1149-41bb-8612-bcfe2dd89ce0" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b15b7977-3e69-4fd2-b8e1-c901de241f70" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c24586d1-2620-4ad5-8b9c-9ad5b339f5d9" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/564c5d4d-3d38-4cae-98dd-42d07fff1d72" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6f3af198-ecb4-47b3-9dd0-b00bc215c0c2" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/0d03cc48-852b-4404-98a0-30606d608e19" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4d6fe2ef-8b1f-4d82-8d78-904b173f2da3" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4dc8c9c8-f643-462c-abbf-a9c2f11b809a" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/cbb61b13-f456-4197-a040-94ad8fdc2f16" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/d365d2c9-4a03-4619-a617-b18287c15e08" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/74f2f442-e5ca-42c2-800d-596b47ad0f5d" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/dce98466-5c83-432b-a222-8949ec103d42" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e346fad1-88ff-4e66-8f89-096bf2a96cd7" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/531fe330-2852-4afe-8a84-5a603dd09f7f" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/8953ad19-b401-4f7f-b905-a4531e676020" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 *Add screenshot here*
 
