@@ -324,10 +324,10 @@ This project is licensed under the MIT License.
 
 ## 🌍 Live Demo
 
-Add your deployed Render URL here:
+deployed Render URL here:
 
 ```
-https://your-homestay-app.onrender.com
+[https://your-homestay-app.onrender.com](https://homestay-chgo.onrender.com/)
 ```
 
 ---
